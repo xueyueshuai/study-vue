@@ -10,3 +10,15 @@ module.exports = {
     assetsDir: 'static',  // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录
 }
 ```
+
+
+::: warning vue-router 默认 hash 模式 —— 使用 URL 的 hash 来模拟一个完整的 URL，于是当 URL 改变时，页面不会重新加载。
+
+``` js{2}
+const router = new VueRouter({
+  mode: 'hash',
+  base: process.env.BASE_URL,
+  routes
+})
+
+```

@@ -12,7 +12,7 @@ module.exports = {
               collapsable: false,
               children: [
                 ['/guide/createProject/','创建一个项目'],
-                // ['/guide/createProject/','创建一个项目'],
+                ['/guide/vueConfig/','配置vue.config.js'],
               ]
             },
           ]

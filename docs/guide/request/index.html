@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>网络请求 | study vue</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/study-vue/assets/css/0.styles.d2585b38.css" as="style"><link rel="preload" href="/study-vue/assets/js/app.2915d98b.js" as="script"><link rel="preload" href="/study-vue/assets/js/2.3362ab0f.js" as="script"><link rel="preload" href="/study-vue/assets/js/9.651b8874.js" as="script"><link rel="prefetch" href="/study-vue/assets/js/10.741d08cb.js"><link rel="prefetch" href="/study-vue/assets/js/11.a6de1658.js"><link rel="prefetch" href="/study-vue/assets/js/3.ed15dfd9.js"><link rel="prefetch" href="/study-vue/assets/js/4.697ccb69.js"><link rel="prefetch" href="/study-vue/assets/js/5.5aa14050.js"><link rel="prefetch" href="/study-vue/assets/js/6.8f92b428.js"><link rel="prefetch" href="/study-vue/assets/js/7.95931711.js"><link rel="prefetch" href="/study-vue/assets/js/8.691b836b.js">
+    <link rel="stylesheet" href="/study-vue/assets/css/0.styles.d2585b38.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/study-vue/" class="home-link router-link-active"><!----> <span class="site-name">study vue</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/study-vue/" class="nav-link">
+  Home
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/study-vue/" class="nav-link">
+  Home
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>笔记</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/study-vue/guide/createProject/" class="sidebar-link">创建一个项目</a></li><li><a href="/study-vue/guide/vueConfig/" class="sidebar-link">配置vue.config.js</a></li><li><a href="/study-vue/guide/router/" class="sidebar-link">路由相关</a></li><li><a href="/study-vue/guide/request/" aria-current="page" class="active sidebar-link">网络请求</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/study-vue/guide/request/#axios" class="sidebar-link">axios</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="网络请求"><a href="#网络请求" class="header-anchor">#</a> 网络请求</h1> <h2 id="axios"><a href="#axios" class="header-anchor">#</a> axios</h2> <p><code>/src/utils/request.js</code></p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> axios <span class="token keyword">from</span> <span class="token string">'axios'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>getToken<span class="token punctuation">,</span> logoutSuccess<span class="token punctuation">,</span> showErrorMsg <span class="token keyword">as</span> noti<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@/utils/func'</span>
+<span class="token keyword">import</span> config <span class="token keyword">from</span> <span class="token string">'@/config'</span>
+<span class="token keyword">import</span> i18n <span class="token keyword">from</span> <span class="token string">&quot;@/components/lang&quot;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// ------- start -------------</span>
+<span class="token keyword">let</span> <span class="token function-variable function">getBaseUrl</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> config<span class="token punctuation">.</span>apiHost
+<span class="token punctuation">}</span>
+
+<span class="token keyword">let</span> <span class="token function-variable function">showErrorMsg</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">noti</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>message<span class="token punctuation">,</span> data<span class="token punctuation">.</span>description<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// ------- end -------------</span>
+
+<span class="token keyword">const</span> myAxiosInstance <span class="token operator">=</span> axios<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token comment">// timeout: 6000,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+myAxiosInstance<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>request<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>
+  <span class="token parameter">requestConfig</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    requestConfig<span class="token punctuation">.</span>baseURL <span class="token operator">=</span> <span class="token function">getBaseUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">let</span> token <span class="token operator">=</span> <span class="token function">getToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>token<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      requestConfig<span class="token punctuation">.</span>headers<span class="token punctuation">[</span><span class="token string">'Xzd-Token'</span><span class="token punctuation">]</span> <span class="token operator">=</span> token<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//数据导出</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>requestConfig<span class="token punctuation">.</span>data <span class="token operator">&amp;&amp;</span> requestConfig<span class="token punctuation">.</span>data<span class="token punctuation">.</span>exportExcel <span class="token operator">==</span> <span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      requestConfig<span class="token punctuation">.</span>responseType <span class="token operator">=</span> <span class="token string">'blob'</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// return requestConfig; 或 return Promise.resolve(requestConfig);</span>
+    <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>requestConfig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token parameter">err</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">showErrorMsg</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token literal-property property">message</span><span class="token operator">:</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.title'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">description</span><span class="token operator">:</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.requestError'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+
+myAxiosInstance<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>response<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>
+  <span class="token parameter">response</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>response<span class="token punctuation">.</span>status <span class="token operator">&lt;</span> <span class="token number">500</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">let</span> res <span class="token operator">=</span> response<span class="token punctuation">.</span>data<span class="token punctuation">;</span>
+
+      <span class="token keyword">let</span> code <span class="token operator">=</span> response<span class="token punctuation">.</span>headers<span class="token punctuation">[</span><span class="token string">'xzd-code'</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token number">1</span>
+      <span class="token keyword">let</span> msg <span class="token operator">=</span> <span class="token function">decodeURIComponent</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>headers<span class="token punctuation">[</span><span class="token string">'xzd-msg'</span><span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token string">''</span><span class="token punctuation">)</span>
+      <span class="token keyword">let</span> fileName <span class="token operator">=</span> response<span class="token punctuation">.</span>headers<span class="token punctuation">[</span><span class="token string">'xzd-file-name'</span><span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token string">''</span>
+
+      <span class="token keyword">switch</span> <span class="token punctuation">(</span>code<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> <span class="token number">200</span><span class="token operator">:</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>response<span class="token punctuation">.</span>config<span class="token punctuation">.</span>data <span class="token operator">&amp;&amp;</span> fileName <span class="token operator">&amp;&amp;</span> response<span class="token punctuation">.</span>config<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span><span class="token string">'&quot;exportExcel&quot;:true'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> response
+          <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> response<span class="token punctuation">.</span>data
+          <span class="token punctuation">}</span>
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">case</span> <span class="token number">201</span><span class="token operator">:</span>
+          <span class="token function">showErrorMsg</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            <span class="token literal-property property">message</span><span class="token operator">:</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.title'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">description</span><span class="token operator">:</span> msg <span class="token operator">||</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.systemError'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">style</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token literal-property property">whiteSpace</span><span class="token operator">:</span> <span class="token string">&quot;pre-wrap&quot;</span>
+            <span class="token punctuation">}</span>
+          <span class="token punctuation">}</span><span class="token punctuation">)</span>
+          <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">case</span> <span class="token number">202</span><span class="token operator">:</span>
+          <span class="token function">showErrorMsg</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            <span class="token literal-property property">message</span><span class="token operator">:</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.title'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">description</span><span class="token operator">:</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.invalidToken'</span><span class="token punctuation">)</span>
+          <span class="token punctuation">}</span><span class="token punctuation">)</span>
+          <span class="token function">logoutSuccess</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+          <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">default</span><span class="token operator">:</span>
+          <span class="token function">showErrorMsg</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            <span class="token literal-property property">message</span><span class="token operator">:</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.title'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">description</span><span class="token operator">:</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.codeNotExists'</span><span class="token punctuation">)</span>
+          <span class="token punctuation">}</span><span class="token punctuation">)</span>
+          <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.serverError'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token function">showErrorMsg</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        <span class="token literal-property property">message</span><span class="token operator">:</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.title'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">description</span><span class="token operator">:</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.serverResponseError'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token parameter">error</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">showErrorMsg</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token literal-property property">message</span><span class="token operator">:</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.title'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">description</span><span class="token operator">:</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.serverResponseError'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> myAxiosInstance
+
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/study-vue/guide/router/" class="prev">
+        路由相关
+      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/study-vue/assets/js/app.2915d98b.js" defer></script><script src="/study-vue/assets/js/2.3362ab0f.js" defer></script><script src="/study-vue/assets/js/9.651b8874.js" defer></script>
+  </body>
+</html>

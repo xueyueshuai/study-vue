@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>vue.config.js | study vue</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/study-vue/assets/css/0.styles.d2585b38.css" as="style"><link rel="preload" href="/study-vue/assets/js/app.2915d98b.js" as="script"><link rel="preload" href="/study-vue/assets/js/2.3362ab0f.js" as="script"><link rel="preload" href="/study-vue/assets/js/11.a6de1658.js" as="script"><link rel="prefetch" href="/study-vue/assets/js/10.741d08cb.js"><link rel="prefetch" href="/study-vue/assets/js/3.ed15dfd9.js"><link rel="prefetch" href="/study-vue/assets/js/4.697ccb69.js"><link rel="prefetch" href="/study-vue/assets/js/5.5aa14050.js"><link rel="prefetch" href="/study-vue/assets/js/6.8f92b428.js"><link rel="prefetch" href="/study-vue/assets/js/7.95931711.js"><link rel="prefetch" href="/study-vue/assets/js/8.691b836b.js"><link rel="prefetch" href="/study-vue/assets/js/9.651b8874.js">
+    <link rel="stylesheet" href="/study-vue/assets/css/0.styles.d2585b38.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/study-vue/" class="home-link router-link-active"><!----> <span class="site-name">study vue</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/study-vue/" class="nav-link">
+  Home
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/study-vue/" class="nav-link">
+  Home
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>笔记</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/study-vue/guide/createProject/" class="sidebar-link">创建一个项目</a></li><li><a href="/study-vue/guide/vueConfig/" aria-current="page" class="active sidebar-link">配置vue.config.js</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/study-vue/guide/vueConfig/#配置vue-config-js" class="sidebar-link">配置vue.config.js</a></li></ul></li><li><a href="/study-vue/guide/router/" class="sidebar-link">路由相关</a></li><li><a href="/study-vue/guide/request/" class="sidebar-link">网络请求</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="vue-config-js"><a href="#vue-config-js" class="header-anchor">#</a> vue.config.js</h1> <h2 id="配置vue-config-js"><a href="#配置vue-config-js" class="header-anchor">#</a> 配置vue.config.js</h2> <p>vue.config.js 没有可以新建</p> <div class="language-js extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">outputDir</span><span class="token operator">:</span> <span class="token string">&quot;dist&quot;</span><span class="token punctuation">,</span>  <span class="token comment">//打包时生成的生产环境构建文件的目录</span>
+    <span class="token literal-property property">publicPath</span><span class="token operator">:</span> <span class="token string">&quot;./&quot;</span><span class="token punctuation">,</span>  <span class="token comment">// 可以设置成相对路径，这样所有的资源都会被链接为相对路径，打出来的包可以被部署在任意路径 ，配合 “历史模式为hash模式使用即#模式”</span>
+    <span class="token literal-property property">assetsDir</span><span class="token operator">:</span> <span class="token string">'static'</span><span class="token punctuation">,</span>  <span class="token comment">// 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录</span>
+<span class="token punctuation">}</span>
+</code></pre></div><div class="custom-block warning"><p class="custom-block-title">vue-router 默认 hash 模式 —— 使用 URL 的 hash 来模拟一个完整的 URL，于是当 URL 改变时，页面不会重新加载。</p> <div class="language-js extra-class"><div class="highlight-lines"><br><div class="highlighted"> </div><br><br><br><br><br></div><pre class="language-js"><code><span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VueRouter</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">mode</span><span class="token operator">:</span> <span class="token string">'hash'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">base</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">BASE_URL</span><span class="token punctuation">,</span>
+  routes
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+</code></pre></div></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/study-vue/guide/createProject/" class="prev">
+        创建一个项目
+      </a></span> <span class="next"><a href="/study-vue/guide/router/">
+        路由相关
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/study-vue/assets/js/app.2915d98b.js" defer></script><script src="/study-vue/assets/js/2.3362ab0f.js" defer></script><script src="/study-vue/assets/js/11.a6de1658.js" defer></script>
+  </body>
+</html>

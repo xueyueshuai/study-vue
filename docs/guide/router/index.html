@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>router | study vue</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/study-vue/assets/css/0.styles.d2585b38.css" as="style"><link rel="preload" href="/study-vue/assets/js/app.2915d98b.js" as="script"><link rel="preload" href="/study-vue/assets/js/2.3362ab0f.js" as="script"><link rel="preload" href="/study-vue/assets/js/10.741d08cb.js" as="script"><link rel="prefetch" href="/study-vue/assets/js/11.a6de1658.js"><link rel="prefetch" href="/study-vue/assets/js/3.ed15dfd9.js"><link rel="prefetch" href="/study-vue/assets/js/4.697ccb69.js"><link rel="prefetch" href="/study-vue/assets/js/5.5aa14050.js"><link rel="prefetch" href="/study-vue/assets/js/6.8f92b428.js"><link rel="prefetch" href="/study-vue/assets/js/7.95931711.js"><link rel="prefetch" href="/study-vue/assets/js/8.691b836b.js"><link rel="prefetch" href="/study-vue/assets/js/9.651b8874.js">
+    <link rel="stylesheet" href="/study-vue/assets/css/0.styles.d2585b38.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/study-vue/" class="home-link router-link-active"><!----> <span class="site-name">study vue</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/study-vue/" class="nav-link">
+  Home
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/study-vue/" class="nav-link">
+  Home
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>笔记</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/study-vue/guide/createProject/" class="sidebar-link">创建一个项目</a></li><li><a href="/study-vue/guide/vueConfig/" class="sidebar-link">配置vue.config.js</a></li><li><a href="/study-vue/guide/router/" aria-current="page" class="active sidebar-link">路由相关</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/study-vue/guide/router/#src-router-index-js文件" class="sidebar-link">/src/router/index.js文件</a></li><li class="sidebar-sub-header"><a href="/study-vue/guide/router/#src-router-firstgetandgo-js文件" class="sidebar-link">/src/router/firstGetAndGo.js文件</a></li><li class="sidebar-sub-header"><a href="/study-vue/guide/router/#src-store-module-user-js文件" class="sidebar-link">/src/store/module/user.js文件</a></li></ul></li><li><a href="/study-vue/guide/request/" class="sidebar-link">网络请求</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="router"><a href="#router" class="header-anchor">#</a> router</h1> <h2 id="src-router-index-js文件"><a href="#src-router-index-js文件" class="header-anchor">#</a> <code>/src/router/index.js</code>文件</h2> <p>路由白名单直接访问</p> <p>需要登录才能访问的路由 要保证登录状态 且 获取过菜单 才能访问</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> VueRouter <span class="token keyword">from</span> <span class="token string">&quot;vue-router&quot;</span>
+<span class="token keyword">import</span> NProgress <span class="token keyword">from</span> <span class="token string">'nprogress'</span> <span class="token comment">// progress bar</span>
+<span class="token keyword">import</span> config <span class="token keyword">from</span> <span class="token string">'@/config/index'</span>
+<span class="token keyword">import</span> store <span class="token keyword">from</span> <span class="token string">'@/store'</span>
+<span class="token keyword">import</span> staticRoutes <span class="token keyword">from</span> <span class="token string">&quot;@/router/staticRoutes&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>firstGetSecondGo<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@/router/firstGetAndGo&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>getToken<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@/utils/func&quot;</span><span class="token punctuation">;</span>
+
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>VueRouter<span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> originalPush <span class="token operator">=</span> <span class="token class-name">VueRouter</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>push
+<span class="token class-name">VueRouter</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">push</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">push</span><span class="token punctuation">(</span><span class="token parameter">location</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">originalPush</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> location<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token parameter">err</span> <span class="token operator">=&gt;</span> err<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">let</span> <span class="token punctuation">{</span>tokenWhiteList<span class="token punctuation">,</span> loginPath<span class="token punctuation">}</span> <span class="token operator">=</span> config
+
+<span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VueRouter</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">routes</span><span class="token operator">:</span> staticRoutes
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+router<span class="token punctuation">.</span><span class="token function">beforeEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span> from<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+
+  <span class="token comment">// 进度条</span>
+  NProgress<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token comment">// web标题</span>
+  to<span class="token punctuation">.</span>meta <span class="token operator">&amp;&amp;</span> to<span class="token punctuation">.</span>meta<span class="token punctuation">.</span>title <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>window<span class="token punctuation">.</span>document<span class="token punctuation">.</span>title <span class="token operator">=</span> to<span class="token punctuation">.</span>meta<span class="token punctuation">.</span>title<span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>tokenWhiteList<span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span>to<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 去的是token白名单</span>
+
+    <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 去的不是token白名单</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">getToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>user<span class="token punctuation">.</span>info<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 登录状态下 - 并且已加载过个人菜单</span>
+        <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 登录状态下 - 并且未加载过个人菜单</span>
+        <span class="token function">firstGetSecondGo</span><span class="token punctuation">(</span>to<span class="token punctuation">,</span> from<span class="token punctuation">,</span> next<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 未登录状态-去的是需要登录才能访问的页面</span>
+      <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token literal-property property">path</span><span class="token operator">:</span> loginPath<span class="token punctuation">,</span> <span class="token literal-property property">query</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token literal-property property">redirect</span><span class="token operator">:</span> to<span class="token punctuation">.</span>fullPath<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+router<span class="token punctuation">.</span><span class="token function">afterEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 进度条</span>
+  NProgress<span class="token punctuation">.</span><span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">resetRouter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  router<span class="token punctuation">.</span>matcher <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VueRouter</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">routes</span><span class="token operator">:</span> staticRoutes
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span>matcher
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> router
+
+</code></pre></div><h2 id="src-router-firstgetandgo-js文件"><a href="#src-router-firstgetandgo-js文件" class="header-anchor">#</a> <code>/src/router/firstGetAndGo.js</code>文件</h2> <p>根据当前登录者权限 获取路由菜单 动态add到router中</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span>  store <span class="token keyword">from</span> <span class="token string">'@/store'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>logoutSuccess<span class="token punctuation">,</span> showErrorMsg<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@/utils/func&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> router <span class="token keyword">from</span> <span class="token string">&quot;@/router/index&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> i18n <span class="token keyword">from</span> <span class="token string">'@/components/lang'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">firstGetSecondGo</span><span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span> from<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  store<span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token string">'user/getLoginUserInfo'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span>routes<span class="token punctuation">}</span></span><span class="token punctuation">)</span><span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    router<span class="token punctuation">.</span><span class="token function">addRoute</span><span class="token punctuation">(</span>routes<span class="token punctuation">)</span>
+    router<span class="token punctuation">.</span><span class="token function">addRoute</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'*'</span><span class="token punctuation">,</span> <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'Page404'</span><span class="token punctuation">,</span> <span class="token function-variable function">component</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">'@/views/common/Page404.vue'</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// 请求带有 redirect 重定向时，登录自动重定向到该地址</span>
+    <span class="token keyword">const</span> redirect <span class="token operator">=</span> <span class="token function">decodeURIComponent</span><span class="token punctuation">(</span>from<span class="token punctuation">.</span>query<span class="token punctuation">.</span>redirect <span class="token operator">||</span> to<span class="token punctuation">.</span>path<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>to<span class="token punctuation">.</span>path <span class="token operator">===</span> redirect<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token operator">...</span>to<span class="token punctuation">,</span> <span class="token literal-property property">replace</span><span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 跳转到目的路由</span>
+      <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">path</span><span class="token operator">:</span> redirect <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token parameter">err</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">showErrorMsg</span><span class="token punctuation">(</span>i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.title'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> i18n<span class="token punctuation">.</span><span class="token function">t</span><span class="token punctuation">(</span><span class="token string">'message.getLoginUserInfoFail'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token function">logoutSuccess</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="src-store-module-user-js文件"><a href="#src-store-module-user-js文件" class="header-anchor">#</a> <code>/src/store/module/user.js</code>文件</h2> <p>获取用户的权限 并整合成 routers 树</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span>getLoginUserInfo<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@/api/common&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> BaseLayout <span class="token keyword">from</span> <span class="token string">&quot;@/layout/BaseLayout&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> EmptyLayout <span class="token keyword">from</span> <span class="token string">&quot;@/layout/EmptyLayout&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> Page404 <span class="token keyword">from</span> <span class="token string">&quot;@/views/common/Page404&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> markMap <span class="token keyword">from</span> <span class="token string">&quot;@/router/markMap&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>listToTree<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@/utils/func&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> user <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">namespaced</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">info</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">tree</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span>
+
+    <span class="token literal-property property">routes</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">menu</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">marks</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">homePath</span><span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">mutations</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token constant">SET</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span> <span class="token punctuation">[</span>k<span class="token punctuation">,</span> v<span class="token punctuation">]</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      state<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> v<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">actions</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function">getLoginUserInfo</span><span class="token punctuation">(</span><span class="token parameter">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token function">getLoginUserInfo</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+
+        <span class="token keyword">let</span> <span class="token punctuation">{</span> myResourceList <span class="token punctuation">}</span> <span class="token operator">=</span> res<span class="token punctuation">.</span>data
+
+        <span class="token keyword">let</span> tree <span class="token operator">=</span> <span class="token function">listToTree</span><span class="token punctuation">(</span>myResourceList<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'info'</span><span class="token punctuation">,</span> res<span class="token punctuation">.</span>data<span class="token punctuation">.</span>info <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">]</span><span class="token punctuation">)</span>
+        context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'myResourceList'</span><span class="token punctuation">,</span> myResourceList<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'tree'</span><span class="token punctuation">,</span> tree<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">let</span> <span class="token punctuation">{</span>routes<span class="token punctuation">,</span> menu<span class="token punctuation">,</span> marks<span class="token punctuation">,</span> homePath<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">getInfoFromTree</span><span class="token punctuation">(</span>tree<span class="token punctuation">)</span>
+
+
+        context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'routes'</span><span class="token punctuation">,</span> routes<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'menu'</span><span class="token punctuation">,</span> menu<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'marks'</span><span class="token punctuation">,</span> marks<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'homePath'</span><span class="token punctuation">,</span> homePath<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>routes<span class="token punctuation">,</span> menu<span class="token punctuation">,</span> marks<span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+    <span class="token function">logout</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span>commit<span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token parameter">resolve</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'info'</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'myResourceList'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'tree'</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'routes'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'menu'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'marks'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'SET'</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'homePath'</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// return this.$store.getters['user/getLoginUserInfo']</span>
+  <span class="token comment">// getters: {</span>
+  <span class="token comment">//   getLoginUserInfo(state) {</span>
+  <span class="token comment">//     let v = state.loginUserInfo</span>
+  <span class="token comment">//     if (v === null) {</span>
+  <span class="token comment">//       vuex.dispatch('user/getLoginUserInfo');</span>
+  <span class="token comment">//     }</span>
+  <span class="token comment">//     return v;</span>
+  <span class="token comment">//   },</span>
+  <span class="token comment">// }</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">function</span> <span class="token function">getInfoFromTree</span><span class="token punctuation">(</span><span class="token parameter">tree</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> someObj <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  someObj<span class="token punctuation">.</span><span class="token function-variable function">getRoutesFromTree</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">list</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> newList <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    list<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">v</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'dir'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        newList<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+          <span class="token literal-property property">path</span><span class="token operator">:</span> v<span class="token punctuation">.</span>mark<span class="token punctuation">,</span>
+          <span class="token literal-property property">name</span><span class="token operator">:</span> v<span class="token punctuation">.</span>mark<span class="token punctuation">,</span>
+          <span class="token literal-property property">component</span><span class="token operator">:</span> EmptyLayout<span class="token punctuation">,</span>
+          <span class="token literal-property property">children</span><span class="token operator">:</span> someObj<span class="token punctuation">.</span><span class="token function">getRoutesFromTree</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>children <span class="token operator">||</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">meta</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token literal-property property">title</span><span class="token operator">:</span> v<span class="token punctuation">.</span>name<span class="token punctuation">,</span> <span class="token literal-property property">enTitle</span><span class="token operator">:</span>v<span class="token punctuation">.</span>enName<span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'menu'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        newList<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+          <span class="token literal-property property">path</span><span class="token operator">:</span> v<span class="token punctuation">.</span>mark<span class="token punctuation">,</span>
+          <span class="token literal-property property">name</span><span class="token operator">:</span> v<span class="token punctuation">.</span>mark<span class="token punctuation">,</span>
+          <span class="token literal-property property">component</span><span class="token operator">:</span> markMap<span class="token punctuation">[</span>v<span class="token punctuation">.</span>mark<span class="token punctuation">]</span> <span class="token operator">||</span> Page404<span class="token punctuation">,</span>
+          <span class="token literal-property property">meta</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token literal-property property">title</span><span class="token operator">:</span> v<span class="token punctuation">.</span>name<span class="token punctuation">,</span> <span class="token literal-property property">enTitle</span><span class="token operator">:</span>v<span class="token punctuation">.</span>enName<span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> newList
+  <span class="token punctuation">}</span>
+
+  someObj<span class="token punctuation">.</span>homePath <span class="token operator">=</span> <span class="token string">''</span>
+  someObj<span class="token punctuation">.</span>getMenuFromTree <span class="token operator">=</span> <span class="token punctuation">(</span>list<span class="token punctuation">,</span> fatherPath <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> newList <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    list<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">v</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'dir'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        newList<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+          <span class="token literal-property property">path</span><span class="token operator">:</span> fatherPath <span class="token operator">+</span> <span class="token string">'/'</span> <span class="token operator">+</span> v<span class="token punctuation">.</span>mark<span class="token punctuation">,</span>
+          <span class="token literal-property property">name</span><span class="token operator">:</span> v<span class="token punctuation">.</span>name<span class="token punctuation">,</span>
+          <span class="token literal-property property">enName</span><span class="token operator">:</span> v<span class="token punctuation">.</span>enName<span class="token punctuation">,</span>
+          <span class="token literal-property property">icon</span><span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">children</span><span class="token operator">:</span> someObj<span class="token punctuation">.</span><span class="token function">getMenuFromTree</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>children <span class="token operator">||</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> fatherPath <span class="token operator">+</span> <span class="token string">'/'</span> <span class="token operator">+</span> v<span class="token punctuation">.</span>mark<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'menu'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        newList<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+          <span class="token literal-property property">path</span><span class="token operator">:</span> fatherPath <span class="token operator">+</span> <span class="token string">'/'</span> <span class="token operator">+</span> v<span class="token punctuation">.</span>mark<span class="token punctuation">,</span>
+          <span class="token literal-property property">name</span><span class="token operator">:</span> v<span class="token punctuation">.</span>name<span class="token punctuation">,</span>
+          <span class="token literal-property property">enName</span><span class="token operator">:</span> v<span class="token punctuation">.</span>enName<span class="token punctuation">,</span>
+          <span class="token literal-property property">icon</span><span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>someObj<span class="token punctuation">.</span>homePath <span class="token operator">===</span> <span class="token string">''</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          someObj<span class="token punctuation">.</span>homePath <span class="token operator">=</span> fatherPath <span class="token operator">+</span> <span class="token string">'/'</span> <span class="token operator">+</span> v<span class="token punctuation">.</span>mark
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> newList
+  <span class="token punctuation">}</span>
+
+  someObj<span class="token punctuation">.</span>marks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  someObj<span class="token punctuation">.</span><span class="token function-variable function">getMarksFromTree</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">list</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    list<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">v</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      someObj<span class="token punctuation">.</span>marks<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>mark<span class="token punctuation">)</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>v<span class="token punctuation">.</span>children<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        someObj<span class="token punctuation">.</span><span class="token function">getMarksFromTree</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>children<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  someObj<span class="token punctuation">.</span><span class="token function">getMarksFromTree</span><span class="token punctuation">(</span>tree<span class="token punctuation">)</span>
+
+
+  <span class="token keyword">let</span> menu <span class="token operator">=</span> someObj<span class="token punctuation">.</span><span class="token function">getMenuFromTree</span><span class="token punctuation">(</span>tree<span class="token punctuation">)</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">menu</span><span class="token operator">:</span> menu<span class="token punctuation">,</span>
+    <span class="token literal-property property">marks</span><span class="token operator">:</span> someObj<span class="token punctuation">.</span>marks<span class="token punctuation">,</span>
+    <span class="token literal-property property">homePath</span><span class="token operator">:</span> someObj<span class="token punctuation">.</span>homePath<span class="token punctuation">,</span>
+
+    <span class="token literal-property property">routes</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'index'</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">component</span><span class="token operator">:</span> BaseLayout<span class="token punctuation">,</span>
+      <span class="token literal-property property">children</span><span class="token operator">:</span> someObj<span class="token punctuation">.</span><span class="token function">getRoutesFromTree</span><span class="token punctuation">(</span>tree<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">redirect</span><span class="token operator">:</span> someObj<span class="token punctuation">.</span>homePath<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> user
+
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/study-vue/guide/vueConfig/" class="prev">
+        配置vue.config.js
+      </a></span> <span class="next"><a href="/study-vue/guide/request/">
+        网络请求
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/study-vue/assets/js/app.2915d98b.js" defer></script><script src="/study-vue/assets/js/2.3362ab0f.js" defer></script><script src="/study-vue/assets/js/10.741d08cb.js" defer></script>
+  </body>
+</html>

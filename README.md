@@ -14,3 +14,5 @@ features:
 footer: MIT Licensed | Copyright © xys
 ---
 
+<!-- vuepress dev 运行 -->
+<!-- vuepress build 打包 将打包的/.vuepress/dist 改名移动到/docs -->

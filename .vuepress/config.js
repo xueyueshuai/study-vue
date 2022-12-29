@@ -26,6 +26,30 @@ module.exports = {
 
                 ]
             },
+            {
+                title: '其他好用工具',
+                collapsable: false,
+                children: [
+                    ['/guide/ChineseLayout/', 'Chinese Layout'],
+
+                ]
+            },
+            {
+                title: '网格布局',
+                collapsable: false,
+                children: [
+                    ['/guide/displayGrid/', '一张图'],
+
+                ]
+            },
+            // {
+            //     title: '测试',
+            //     collapsable: false,
+            //     children: [
+            //         ['/guide/test/', 'test'],
+
+            //     ]
+            // },
         ]
     }
 }

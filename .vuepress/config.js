@@ -39,7 +39,13 @@ module.exports = {
                 collapsable: false,
                 children: [
                     ['/guide/displayGrid/', '一张图'],
-
+                ]
+            },
+            {
+                title: '2023年法定假日',
+                collapsable: false,
+                children: [
+                    ['/guide/holiday/', '2023年法定假日'],
                 ]
             },
             // {
